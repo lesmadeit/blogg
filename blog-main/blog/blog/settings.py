@@ -24,12 +24,12 @@ load_dotenv(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('django-insecure-zz1%a07*fqkvywyaft230-6rth88e$$_3wzilwxx!1up5b$b0g')
+SECRET_KEY = 'django-insecure-zz1%a07*fqkvywyaft230-6rth88e$$_3wzilwxx!1up5b$b0g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.getenv('').split('')
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -82,12 +82,15 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default':  dj_database_url.parse (os.environ.get({
-        'ENGINE':'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }), conn_max_age= 600)
-}
+if not DEBUG:
+    DATABASES = {'default': dj_database_url.parse(os.environ.get('postgres://blogdatabase_pdas_user:lU4RSGA0mtYtbn1JGPJakxb67PU0XmSg@dpg-cngr1ggl6cac73affap0-a/blogdatabase_pdas'))}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE':'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
